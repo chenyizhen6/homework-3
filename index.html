@@ -87,7 +87,7 @@
 
 <button type="button" id="start" title="Start  Game" ><img src="halloween pumpkin.png"  width="200px" height="165px" ></button>
 <P>Score:<span id = "score">   0</span></P>
-<P>Time:<span id="timeleft">    30</span>    秒</P>
+<P>Time:<span id="timeleft">    40</span>    秒</P>
 
 <script>
     // 開始按鈕
@@ -104,7 +104,7 @@
     //剩餘時間文字
     let timeleft = document.getElementById("timeleft");
     // 遊戲時間
-    let time = 30;
+    let time = 40;
     
     // 當點擊開始按鈕時
     start.onclick = function(){
@@ -129,12 +129,12 @@
             clearInterval(timer);
             setTimeout(function(){
             alert(`時間到，你獲得了${score}分`);
-                time = 30;
+                time = 40;
 				score = 0;
 				// 將開始按鈕啟用
 				start.removeAttribute("disabled");
 				// 改回時間文字
-				timeleft.innerText = 30;
+				timeleft.innerText = 40;
 				// 改回分數文字
 				scoreText.innerText = 0;
             }, 100);
@@ -163,7 +163,7 @@
             
         }
     
-        for(let i=0;i<2;i++){
+        for(let i=0;i<3;i++){
             let rand = Math.floor(Math.random()*9 );
             tds[rand].classList.add("ghost"); 
         }
