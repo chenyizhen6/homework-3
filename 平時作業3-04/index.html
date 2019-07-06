@@ -1,0 +1,208 @@
+<style>
+    body{
+
+        background-image:url("Halloween1.jpg");
+        background-size:cover;
+        cursor:url("Crucifix-2.png")25 25, auto;
+    }
+    
+    table{
+        margin:auto;
+        margin-top: 200px;
+    }
+
+    /*radial-gradient 圓形(放射狀)色彩漸變:(形狀大小,起始顏色,終止顏色)*/
+    td{
+        border: 2.5px solid black;
+        background:radial-gradient(circle closest-side,#ffdcae ,#ffac30);
+        width: 200px;
+        height: 170px;
+        margin:auto;
+    }
+
+    
+
+    p{
+        color: rgb(255, 59, 59);
+        font-size: 30px;
+        font-weight:bold;
+        font-family: Tahoma;
+        line-height: 20px;
+    }
+
+    button{
+        display:block;
+        margin: auto;
+        cursor:pointer;
+        background-color:rgba(0, 0, 0, 0);
+        border: 0px;
+    }
+
+    button:active{
+            background-color:rgb(10, 21, 34);
+    }   
+
+    .ghost{
+       background-image: url("ghost.jpg");
+       background-size:cover;
+       margin: auto;
+    }
+    
+    .yellow{
+        background-image: url("die.jpg");
+        background-size:cover;
+        cursor:url("light.png")25 25, auto;
+    }
+
+    .angel{
+        background-image: url("angel.jpg");
+        background-size:cover;    
+    }
+
+    .no{
+        background-image: url("angel die.jpg");
+        background-size:cover;
+        cursor:url("light.png")25 25, auto;
+    }
+
+</style>
+
+<table>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+<button type="button" id="start" title="Start  Game" ><img src="halloween pumpkin.png"  width="200px" height="165px" ></button>
+<P>Score:<span id = "score">   0</span></P>
+<P>Time:<span id="timeleft">    40</span>    秒</P>
+
+<script>
+    // 開始按鈕
+    let start = document.getElementById("start");
+    // 分數
+    let score = 0;
+    let scoreText=document.getElementById("score");
+    // 所有td
+    let tds = document.getElementsByTagName("td");
+    // 每秒換格子的計時器 
+    let timer = 0;
+    // 遊戲時間計時器
+    let gameTimer = 0;
+    //剩餘時間文字
+    let timeleft = document.getElementById("timeleft");
+    // 遊戲時間
+    let time = 40;
+    
+    // 當點擊開始按鈕時
+    start.onclick = function(){
+        // 執行計時器
+        timer = setInterval(game,1000);
+        // 立刻換格子
+        game();
+        // 將開始按鈕停用
+        start.setAttribute("disabled","true");
+        // 開始倒數遊戲時間
+        gameTimer = setInterval(gametime,1000);
+    }
+    
+    // 時間
+    function gametime(){
+        time--;
+        timeleft.innerText = time;
+        if(time == 0){
+            // 停止遊戲倒數
+            clearInterval(gameTimer);
+            // 停止換格子
+            clearInterval(timer);
+            setTimeout(function(){
+            alert(`時間到，你獲得了${score}分`);
+                time = 40;
+				score = 0;
+				// 將開始按鈕啟用
+				start.removeAttribute("disabled");
+				// 改回時間文字
+				timeleft.innerText = 40;
+				// 改回分數文字
+				scoreText.innerText = 0;
+            }, 100);
+            
+
+            // 重置所有格子  
+            //classList:為 <div> 元素添加class:
+            for(let i=0;i<tds.length;i++){
+            tds[i].classList.remove("ghost");
+            tds[i].classList.remove("yellow");
+            } 
+            // 重置所有格子
+            for(let i=0;i<tds.length;i++){
+            tds[i].classList.remove("angel");
+            tds[i].classList.remove("no");
+            } 
+        }
+    }    
+        
+   // 換格子
+    function game(){
+        for(let i=0;i<tds.length;i++){
+            tds[i].classList.remove("ghost");
+            tds[i].classList.remove("yellow");
+            tds[i].classList.remove("angel");
+            tds[i].classList.remove("no");
+            
+        }
+    
+        for(let i=0;i<1;i++){
+            let rand = Math.floor(Math.random()*9 );
+            tds[rand].classList.add("angel"); 
+        }
+
+     
+        for(let i=0;i<3;i++){
+
+            let rand = Math.floor(Math.random()*9 );
+            if( !tds[rand].classList.contains("angel") && !tds[rand].classList.contains("ghost")){
+                tds[rand].classList.add("ghost"); 
+            }
+            else{
+                i=i-1;      //i-=1;
+
+            }
+        }
+
+        
+    }
+
+    for(let i=0;i<tds.length;i++){
+            tds[i].onclick = function(){
+                if( this.classList.contains("ghost")){
+                    this.classList.remove("ghost");
+                    this.classList.add("yellow");
+                    score++;
+                    scoreText.innerText = score;
+
+            
+                }
+                else if(this.classList.contains("angel")){
+                         this.classList.remove("angel");
+                         this.classList.add("no");
+                }
+                    
+            }
+                        
+        }
+               
+</script>
